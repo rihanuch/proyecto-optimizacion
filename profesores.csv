@@ -1,0 +1,59 @@
+id;rut;nombre;tipo;cargo;asignaturas;nivel;hpa;hc;hsep;hpie;hd;ht
+0;15467684-8;Silva Silva Alejandra;EDUCADORA;Docente;ORIENTACIÓN;Pre Basica;30;32;11;0;0;43
+1;9705928-4;Manríquez Lucumilla Nelly Marcela;EDUCADORA;Docente;ORIENTACIÓN;Pre Basica;30;32;11;0;0;43
+2;9669884-4;Villarroel Hidalgo Prudencia;EDUCADORA;Docente;ORIENTACIÓN;Pre Basica;30;32;11;0;0;43
+3;13243943-5;Guzmán Zurita Marcia;Docente;Docente;GENERAL BÁSICO;Basica;30;32;5;3;0;40
+4;15417260-2;Rubio Sepúlveda Karin;Docente;Docente;GENERAL BÁSICO,MATEMÁTICA;Basica;34;36;5;3;0;44
+5;7074667-0;Escobar Lagos Hernán;Docente;Docente;GENERAL BÁSICO;Basica;36;39;0;3;0;42
+6;7819315-8;Petit Díaz Cecilia Margarita;Docente;Docente;GENERAL BÁSICO;Basica;30;32;0;3;8;43
+7;11189591-0;Acevedo López Susana;Docente;Docente;GENERAL BÁSICO;Basica;30;32;5;3;0;40
+8;12505960-0;Bona Ruz Pamela;Docente;Docente;GENERAL BÁSICO;Basica;40;43;0;1;0;44
+9;10276216-9;Achurra Insunza Mariela del Carmen;Docente;Docente;GENERAL BÁSICO;Basica;30;32;5;3;0;40
+10;13246068-k;López Rojas Paula del Rosario;Docente;Docente;GENERAL BÁSICO;Basica;35;38;3;3;0;44
+11;15434531-0;Valladares Cornejo Jorge;Docente;Docente;HISTORIA;Basica;10;11;33;0;0;44
+12;15966278-0;Vicencio Astorga María José;Docente;Docente;LENGUAJE;Basica;36;39;2;3;0;44
+13;16372589-4;Marcia Mura Cortéz;Docente;Docente;ARTE;Basica;16;17;25;0;0;42
+14;16406732-5;Vega Maureira Ángela María;Docente;Docente;MATEMÁTICA;Basica;34;36;1;3;0;40
+15;15477151-4;Altamirano Jaque Karen;Docente;Docente;LENGUAJE;Basica;34;36;5;3;0;44
+16;17335929-2;Negrete PeraltaTabata;Docente;Docente;HISTORIA;Basica;30;32;8;0;0;40
+17;18425893-5;López Díaz Esteban Ignacio;Docente;Docente;INGLÉS;Basica;34;36;2;2;0;40
+18;10231904-4;Cantarero Hormazábal Cantarero;Docente;Docente;CIENCIAS NATURALES;Basica;38;41;1;0;0;42
+19;8963952-2;Fuenzalida Villarroel Eduardo;Docente;Docente;MATEMÁTICA;Basica;30;32;7;3;0;42
+20;13672018-k;Acuña Manterola Claudia;Docente;Docente;EDUCACIÓN FÍSICA;Basica;20;21;17;0;0;38
+21;10276226-6;Acevedo López Jorge del Carmen;Docente;Docente;EDUCACIÓN FÍSICA;Basica;0;0;40;0;0;40
+22;10792452-3;Morales Méndez Víctor Manuel;Docente;Docente;RELIGIÓN;Basica;30;32;0;0;12;44
+23;14396153-2;Pinilla Ulloa Juan Andrés;Docente;Docente;MÚSICA,LENGUAJE,MATEMÁTICA;Basica;40;43;0;0;0;43
+24;10657450-2;López Gatica Maribel;Docente;Docente;REFUERZO SEP;Basica;0;0;38;0;0;38
+25;15541346-8;Navia Torres Bárbara;Docente;Docente;LENGUAJE,PAE SALUD;Basica;5;5;22;0;0;27
+26;8873612-5;Guevara García Juana María;Docente;Biliotecaria;CRA;Basica;0;0;40;0;0;40
+27;15344995-3;Lillo Figueroa Alejandro Javier;Docente;Docente;EDUCACIÓN FÍSICA;Basica;16;17;8;0;0;25
+28;17073805-5;Meneses Bustamante Camila Andrea;Docente;Docente;EDUCACIÓN FÍSICA;Basica;0;0;8;0;0;8
+29;13903545-3;Avila Flores Jocelyn Irene;Docente;Docente;BAILE;Basica;0;0;4;0;0;4
+30;9878842-5;Vivanco Lacalle María Soledad;Docente;Docente;COCINA;Basica;0;0;2;0;0;2
+31;17596392-8;Vidal Lizama Jorge Alexis;Docente;Docente;EDUCACIÓN FÍSICA;Basica;0;0;8;0;0;8
+32;7286039-k;Balmaceda Riera María Ximena;Docente;Director;TECNOLOGÍA;Basica;0;0;0;0;44;44
+33;8574343-0;Muñoz Carmona Mónica;Docente;UTP;JEFA UTP;Basica;0;0;0;0;44;44
+34;7989181-9;Herrera Sánchez Elizabeth;Docente;Encargado de Convivencia;ORIENTACIÓN;Basica;0;0;0;0;44;44
+35;10488259-5;Escobar Beltrán Carolina;Asistente;Sec Dirección;SECRETARIA DIRECCIÓN;;0;0;44;0;0;44
+36;15315696-4;Escobar Ramírez Karen;Asistente;Sec UTP;SECRETARIA UTP;;0;0;40;0;0;40
+37;17336093-2;Cobo Hernández Ruth;Asistente;Trab Social;TRABAJO SOCIAL;;0;0;40;0;0;40
+38;17697610-1;Cañas Bruno Pía;Asistente;Sicóloga;SICÓLOGA;;0;0;0;40;0;40
+39;10203261-6;Riqueleme Gladys;Asistente;Técnico en párvulos;TÉCNICO EN PÁRVULOS;;30;30;8;0;0;38
+40;12255039-7;Araneda Catherinne;Asistente;Técnico en párvulos;TÉCNICO EN PÁRVULOS;;30;30;8;0;0;38
+41;12897267-6;Ossandón Pamela;Asistente;Técnico en párvulos;TÉCNICO EN PÁRVULOS;;30;30;8;0;0;38
+42;8653726-5;Sepúlveda Elvira;Asistente;Técnico en párvulos;TÉCNICO EN PÁRVULOS;;30;30;8;0;0;38
+43;18356248-7;Bustamante Denisse;Asistente;Asistente de Aula;Monitora;;0;0;38;0;0;38
+44;13447283-9;Bustos Elizabeth;Asistente;Asistente de Aula;Monitora;;0;0;38;0;0;38
+45;12671672-9;Sobarzo Myriam;Asistente;Asistente de Aula;Monitora;;0;0;38;0;0;38
+46;12132356-7;López Muñoz Manuel Segundo;Asistente;Inspector de Patios;;;44;44;0;0;0;44
+47;17815386-2;Román Leyton Verónica Alejandra;Asistente;Inspector de Patios;;;44;44;0;0;0;44
+48;15927133-1;Espinoza González Natalia;Asistente;Inspector de Patios;;;44;44;0;0;0;44
+49;12415213-5;Díaz Díaz Mariana Soledad;Asistente;Inspector de Patios;;;44;44;0;0;0;44
+50;16144954-7;Velásquez Ravanal Nury;Asistente;Inspector de Patios;;;44;44;0;0;0;44
+51;11489118-5;Vergara Gutiérrez Aída del Carmen;Asistente;Auxiliar de Servicios;;;45;45;0;0;0;45
+52;7934623-3;Vergara Gutiérrez Ericka;Asistente;Auxiliar de Servicios;;;45;45;0;0;0;45
+53;9830409-6;Fuenzalida Cancino Guillermina de las;Asistente;Auxiliar de Servicios;;;45;45;0;0;0;45
+54;9297623-8;Bugueño Valverde Angela Maritza;Asistente;Auxiliar de Servicios;;;45;45;0;0;0;45
+55;7830433-2;Ayala Méndez Marta Herminia;Asistente;Auxiliar de Servicios;;;45;45;0;0;0;45
+56;8252889-k;Herrera Romero José Hernán;Asistente;Auxiliar de Servicios;;;45;45;0;0;0;45
+57;8004579-4;Montenegro Lagos Eduardo Gaspar;Asistente;Auxiliar de Servicios;;;45;45;0;0;0;45
