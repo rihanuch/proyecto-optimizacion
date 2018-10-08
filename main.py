@@ -184,7 +184,7 @@ m.addConstrs((
 
 m.addConstrs((
     quicksum(A[(p, c, r, t), m]
-             for m in modulos for t in dias for p in profesores) >= 1
+             for m in modulos for t in dias for p in profesores) == 1
     for c in cursos for r in ramos),
     "R8")
 
