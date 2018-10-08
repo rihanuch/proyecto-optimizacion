@@ -53,7 +53,7 @@ for id_, profesor in profesores.items():
         else:
             diccionario_profesores_ramos[(profesor['nombre'], ramo_nombre)] = 0
 
-# pprint(diccionario_profesores)
+# pprint(profesores)
 _, profesores_ensenan = multidict(diccionario_profesores_ramos)
 _, profesores_horas = multidict(diccionario_profesores_ensenan)
 # print(profesores_horas)
@@ -111,7 +111,7 @@ profesores = [prof['nombre'] for prof in profesores.values()]
 ramos = [*ramos.values()]
 
 # Función Objetivo
-m.setObjective(quicksum(X[w] for w in combinaciones_3), GRB.MINIMIZE)
+m.setObjective(quicksum(X[(p)] for p in profesores), GRB.MINIMIZE)
 
 # un profesor no puede estar en dos lugares al mismo tiempo
 m.addConstrs((
@@ -144,12 +144,13 @@ m.addConstrs((
 
 
 m.addConstrs((
-    (quicksum(A[(p, c, r, t), m] * 45
-              for c in cursos for r in ramos for t in dias for m in modulos) +
-     quicksum(P[(p, r), t, m] * 45
-              for r in ramos for t in dias for m in modulos) +
-     quicksum(U[(p, t)] * 45 for t in dias)) <=
-    profesores_horas[(p)] * 60 for p in profesores),
+    (45 * quicksum(A[(p, c, r, t), m]
+                   for c in cursos for r in ramos
+                   for t in dias for m in modulos) +
+     45 * quicksum(P[(p, r), t, m]
+                   for r in ramos for t in dias for m in modulos) +
+     45 * quicksum(U[(p, t)] for t in dias)) <=
+    60 * profesores_horas[(p)] for p in profesores),
     "R4")
 
 m.addConstrs((
@@ -157,6 +158,48 @@ m.addConstrs((
              for m in modulos for t in dias for p in profesores) ==
     horas_por_curso[(c, r)] for c in cursos for r in ramos),
     "R5")
+
+# RESTRICCION 6 ESTA PENDIENTE
+
+# m.addConstrs((
+#     ), "R6")
+
+m.addConstrs((
+    X[(p)] <= (45 *
+               (quicksum(A[(p, c, r, t), m] * 45
+                         for c in cursos for r in ramos
+                         for t in dias for m in modulos) +
+                quicksum(U[(p, t)] for t in dias))
+               )/(36 * profesores_horas[(p)]) for p in profesores), "R7_1")
+
+m.addConstrs((
+    X[(p)] >= (45 *
+               (quicksum(A[(p, c, r, t), m] * 45
+                         for c in cursos for r in ramos
+                         for t in dias for m in modulos) +
+                quicksum(U[(p, t)] for t in dias)) -
+               36 * profesores_horas[(p)]
+               )/(36 * profesores_horas[(p)]) for p in profesores), "R7_2")
+
+
+m.addConstrs((
+    quicksum(A[(p, c, r, t), m]
+             for m in modulos for t in dias for p in profesores) >= 1
+    for c in cursos for r in ramos),
+    "R8")
+
+m.addConstrs((quicksum(A[(p, c, r, t), m]
+                       for r in ramos for p in profesores) <= 1
+              for c in cursos for m in modulos for t in dias), "R9")
+
+# 10000000 es M muy grande
+m.addConstrs((
+    profesores_ensenan[(p, r)] * 10000000 >=
+    quicksum(A[(p, c, r, t), m]
+             for m in modulos for t in dias for c in cursos)
+    for p in profesores for r in ramos),
+    "R10")
+
 
 # Optimize
 m.optimize()
