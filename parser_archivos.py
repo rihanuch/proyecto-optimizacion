@@ -1,7 +1,7 @@
 # coding: UTF-8
 
 import csv
-import pprint
+from pprint import pprint
 from random import choice
 
 
@@ -12,7 +12,9 @@ RAMOS_EQUIVALENTES = {
     'LENGUAJE': 'LENGUAJE',
     'Monitora 2°': 'Monitora',
     'ED FÍSICA': 'EDUCACIÓN FÍSICA',
+    'EDUCACIÓN FÍSICA': 'EDUCACIÓN FÍSICA',
     'DIRECTORA': 'TECNOLOGÍA',
+    'TECNOLOGÍA': 'TECNOLOGÍA',
     'Refuerzo SEP': 'REFUERZO SEP',
     'CRA': 'CRA',
     'Sicóloga': 'SICÓLOGA',
@@ -28,6 +30,7 @@ RAMOS_EQUIVALENTES = {
     'GENERAL BÁSICO': 'GENERAL BÁSICO',
     'Sec UTP': 'SECRETARIA UTP',
     'CONVIV ESCOLAR': 'ORIENTACIÓN',
+    'ORIENTACIÓN': 'ORIENTACIÓN',
     'Técnico en párvulos': 'TÉCNICO EN PÁRVULOS',
     'HISTORIA ENLACES': 'HISTORIA',
     'MÚSICA': 'MÚSICA',
@@ -35,8 +38,14 @@ RAMOS_EQUIVALENTES = {
     'INGLÉS': 'INGLÉS',
     'Monitora 4°': 'Monitora',
     'Monitora 3°': 'Monitora',
-    'Trab Social': 'TRABAJO SOCIAL'
+    'Trab Social': 'TRABAJO SOCIAL',
+    'CIENCIAS NATURALES': 'CIENCIAS NATURALES'
 }
+
+
+PLAN = 'datos/plan_2.csv'
+# plan.csv es el que dan
+# plan_2.csv es uno propuesto mas dificil
 
 
 def vacio_a_cero(horas):
@@ -48,7 +57,7 @@ def vacio_a_cero(horas):
 
 def asignaturas_existentes():
     ramos = set()
-    with open('plan.csv', encoding='utf-8') as f:
+    with open(PLAN, encoding='utf-8') as f:
         reader = csv.DictReader(f, delimiter=';')
         for row in reader:
             temp = parse_asignaturas(row['Asignatura'])
@@ -100,7 +109,7 @@ def profs_csv(profs):
 
 def genera_profesores():
     profesores = []
-    with open('plan.csv', encoding='utf-8') as csvfile:
+    with open(PLAN, encoding='utf-8') as csvfile:
         reader = csv.DictReader(csvfile, delimiter=';')
         for row in reader:
             profesores.append(crea_prof(row))
@@ -108,7 +117,7 @@ def genera_profesores():
 
 
 def exporta_profesores():
-    with open('profesores.csv', 'w', encoding='utf-8') as csvfile:
+    with open('datos/profesores.csv', 'w', encoding='utf-8') as csvfile:
         spamwriter = csv.writer(csvfile, delimiter=';')
         headers = [
             'id',
@@ -133,7 +142,7 @@ def exporta_profesores():
 
 
 def exporta_ramos():
-    with open('ramos.csv', 'w', encoding='utf-8') as csvfile:
+    with open('datos/ramos.csv', 'w', encoding='utf-8') as csvfile:
         spamwriter = csv.writer(csvfile, delimiter=';')
         headers = [
             'id',
@@ -149,7 +158,7 @@ def exporta_ramos():
 def ramos_utiles():
     r_utiles = {}
 
-    with open('horas.csv', encoding='utf-8') as f:
+    with open('datos/horas.csv', encoding='utf-8') as f:
         reader = csv.DictReader(f, delimiter=';')
         for _id, row in enumerate(reader):
             r_utiles[_id] = row['\ufefframo']
