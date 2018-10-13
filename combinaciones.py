@@ -5,6 +5,11 @@ from pprint import pprint
 import csv
 
 profesores, ramos = genera_profesores_dict()
+ramos_seguidos = ['ARTE', 'MÚSICA',
+                  'EDUCACIÓN FÍSICA', 
+                  'ORIENTACIÓN',
+                  'TECNOLOGÍA',
+                  'RELIGIÓN']
 nivel = [str(i) for i in range(1, 9)]
 letra_curso = ["A", "B"]
 
@@ -12,6 +17,9 @@ cursos = [i + j for i in nivel for j in letra_curso]
 
 modulos = [i for i in range(1, 9)]
 dias = [i for i in range(1, 6)]
+
+# Para excel
+profesor_ramo = {i['nombre']: i['asignaturas'] for i in profesores.values()}
 
 
 def horas_nivel():
@@ -55,6 +63,7 @@ for id_, profesor in profesores.items():
             diccionario_profesores_ramos[(profesor['nombre'], ramo_nombre)] = 1
         else:
             diccionario_profesores_ramos[(profesor['nombre'], ramo_nombre)] = 0
+
 
 
 _, profesores_ensenan = multidict(diccionario_profesores_ramos)

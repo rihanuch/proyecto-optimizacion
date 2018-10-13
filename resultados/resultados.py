@@ -1,63 +1,94 @@
 from pandas import DataFrame, ExcelWriter
-
-aa = [(('PROF_A', '5A', 'LENGUAJE', 3), 4),
-      (('PROF_A', '5A', 'LENGUAJE', 3), 6),
-      (('PROF_A', '5B', 'LENGUAJE', 2), 3),
-      (('PROF_A', '6A', 'LENGUAJE', 2), 4),
-      (('PROF_A', '6A', 'LENGUAJE', 3), 5),
-      (('PROF_A', '6B', 'LENGUAJE', 2), 2),
-      (('PROF_A', '6B', 'LENGUAJE', 4), 3),
-      (('PROF_A', '7B', 'LENGUAJE', 1), 7),
-      (('PROF_B', '5A', 'LENGUAJE', 2), 1),
-      (('PROF_B', '5B', 'LENGUAJE', 2), 7),
-      (('PROF_B', '7A', 'LENGUAJE', 1), 1),
-      (('PROF_B', '7A', 'LENGUAJE', 2), 3),
-      (('PROF_B', '7A', 'LENGUAJE', 3), 6),
-      (('PROF_B', '7A', 'LENGUAJE', 4), 6),
-      (('PROF_B', '7B', 'LENGUAJE', 2), 4),
-      (('PROF_B', '7B', 'LENGUAJE', 3), 1),
-      (('PROF_B', '7B', 'LENGUAJE', 3), 3),
-      (('PROF_B', '8A', 'LENGUAJE', 1), 2),
-      (('PROF_B', '8A', 'LENGUAJE', 1), 7),
-      (('PROF_B', '8A', 'LENGUAJE', 2), 5),
-      (('PROF_B', '8A', 'LENGUAJE', 4), 2),
-      (('PROF_C', '5A', 'LENGUAJE', 4), 5),
-      (('PROF_C', '5B', 'LENGUAJE', 3), 2),
-      (('PROF_C', '5B', 'LENGUAJE', 4), 6),
-      (('PROF_C', '6A', 'LENGUAJE', 1), 1),
-      (('PROF_C', '6A', 'LENGUAJE', 3), 4),
-      (('PROF_C', '6B', 'LENGUAJE', 2), 7),
-      (('PROF_C', '6B', 'LENGUAJE', 3), 5),
-      (('PROF_C', '8B', 'LENGUAJE', 1), 6),
-      (('PROF_C', '8B', 'LENGUAJE', 1), 7),
-      (('PROF_C', '8B', 'LENGUAJE', 4), 2),
-      (('PROF_C', '8B', 'LENGUAJE', 5), 4)]
+import os
+# TODO:PASAR profesores COMO PARAMETROS
 
 
-def escribir_resultados(horas_aula):
-    lunes = [""]*8
-    martes = [""]*8
-    miercoles = [""]*8
-    jueves = [""]*8
-    viernes = [""]*8
-    for tupla in horas_aula:
-        prof, curso, ramo, dia = tupla[0]
-        modulo = tupla[1]
-        if dia == 1:
-            lunes[modulo-1] += prof + curso + '; '
-        elif dia == 2:
-            martes[modulo-1] += prof + curso + '; '
-        elif dia == 3:
-            miercoles[modulo-1] += prof + curso + '; '
-        elif dia == 4:
-            jueves[modulo-1] += prof + curso + '; '
-        elif dia == 5:
-            viernes[modulo-1] += prof + curso + '; '
+class Escribidor():
+    def __init__(self, horas_aula, horas_planificacion, profesores, path):
+        self.horas_aula = horas_aula
+        self.horas_planificacion = horas_planificacion
+        self.profesores = profesores
+        self.cursos = []
+        self.writer = ExcelWriter(path)
+        self.cargar_datos_basicos()
 
-    df = DataFrame({'LUNES': lunes, 'MARTES': martes, 'MIERCOLES': miercoles,
-                    'JUEVES': jueves, 'VIERNES': viernes})
+        os.remove('resultados/resultados.xlsx')
 
-    writer = ExcelWriter('resultados.xlsx')
-    df.to_excel(writer, 'Sheet1')
-    writer.save()
 
+    def cargar_datos_basicos(self):
+        letras = ["A", "B"]
+        niveles = [i for i in range(1, 9)]
+        for i in letras:
+            for j in niveles:
+                self.cursos.append(str(j)+i)
+
+    def arreglar_planificaciones(self):
+        """
+        Actualmente, se esta demorando mucho en encontrar una solucion al incluir 
+        las variables de planificacion, si estas se omiten (todavia cumpliendo 
+        la restriccion del gobierno) y se agregan despues, completando horarios
+        con planificaciones queda bien
+        """
+        pass
+
+    def escribir_horarios_profes(self):
+        lunes = {prof: [""]*8 for prof in self.profesores}
+        martes = {prof: [""]*8 for prof in self.profesores}
+        miercoles = {prof: [""]*8 for prof in self.profesores}
+        jueves = {prof: [""]*8 for prof in self.profesores}
+        viernes = {prof: [""]*8 for prof in self.profesores}
+
+        for tupla in self.horas_aula:
+            prof, curso, ramo, dia = tupla[0]
+            modulo = tupla[1]
+            if dia == 1:
+                lunes[prof][modulo-1] += curso + '; '
+            elif dia == 2:
+                martes[prof][modulo-1] += curso + '; '
+            elif dia == 3:
+                miercoles[prof][modulo-1] += curso + '; '
+            elif dia == 4:
+                jueves[prof][modulo-1] += curso + '; '
+            elif dia == 5:
+                viernes[prof][modulo-1] += curso + '; '
+
+
+        # A estos diccionarios de dias falta agregarle las horas de planificacion
+        dfs = {}
+        for prof in self.profesores:
+            dfs[prof] = DataFrame({'LUNES': lunes[prof], 'MARTES': martes[prof],
+                                    'MIERCOLES': miercoles[prof],
+                                    'JUEVES': jueves[prof], 'VIERNES': viernes[prof]})
+            dfs[prof].to_excel(self.writer, prof)
+            self.writer.save()
+
+
+
+    def escribir_horarios_cursos(self):
+
+        lunes = {curso: [""]*8 for curso in self.cursos}
+        martes = {curso: [""]*8 for curso in self.cursos}
+        miercoles = {curso: [""]*8 for curso in self.cursos}
+        jueves = {curso: [""]*8 for curso in self.cursos}
+        viernes = {curso: [""]*8 for curso in self.cursos}
+
+        for tupla in self.horas_aula:
+            prof, curso, ramo, dia = tupla[0]
+            modulo = tupla[1]
+            if dia == 1:
+                lunes[curso][modulo-1] += ramo + '; '
+            elif dia == 2:
+                martes[curso][modulo-1] += ramo + '; '
+            elif dia == 3:
+                miercoles[curso][modulo-1] += ramo + '; '
+            elif dia == 4:
+                jueves[curso][modulo-1] += ramo + '; '
+            elif dia == 5:
+                viernes[curso][modulo-1] += ramo + '; '
+
+        dfs = {}
+        for curso in self.cursos:
+            dfs[curso] = DataFrame({'LUNES': lunes[curso], 'MARTES': martes[curso], 'MIERCOLES': miercoles[curso],
+                                    'JUEVES': jueves[curso], 'VIERNES': viernes[curso]})
+            dfs[curso].to_excel(self.writer, curso)
+            self.writer.save()

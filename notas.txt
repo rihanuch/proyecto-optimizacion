@@ -1,0 +1,23 @@
+RESUMEN:
+
+- Restriccion que define X (R7) no toma en cuenta horas planificacion (P), entonces las deja todas = 0
+	- Es horas_aula/horas_contrato y deberia ser horas_aula/(horas_aula+horas_planificacion) (La jesu cacha de esto creo)
+	- Deje una solucion de otra R7_1 arreglada, pero se queda pegado metiendo las restricciones, quizas probar mas
+	- Habria que hacer lo mismo para R7_2
+
+- Otra solucion que intente es crear Rx 
+	- La suma de las horas de planificacion*45 >= 0.6*60*horas_contrato
+	- Me dio infactible, quizas probar con mas profesores
+
+- Otro problema que puede ser es que los profesores estan contratados como por 44 horas:
+	- 44*60 = 2640 minutos = 58 modulos de clases
+	- En una semana hay 8*5 = 40 modulos de clases -> Los profesores si deberian poder trabajar hasta mas tarde
+	- Quizas agregar modulos para que los profesores puedan planificar y Rx si funciona
+
+- En revision restricciones.py hay una funcion revisar_restriccion_gobierno, ahi dan los porcentajes actuales horas aula horas contrato
+	- Por lo tanto, esta bien definido X, no es el problema (Creo)
+
+
+- Una solucion heuristica, puede ser dejar el modelo como esta, y cuando se escriban los resultados en resultados.py hacer:
+	- La funcion que escribe a los profes mete al excel sus nombres (como sheetname) y el ramo o (curso, mod, dia, prof) en las celdas
+	- Aqui, podemos rellenar horarios vacios con horas planificacion hasta que se rellenen las horas de sus contratos

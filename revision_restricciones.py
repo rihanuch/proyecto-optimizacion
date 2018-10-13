@@ -82,10 +82,28 @@ def revisar_R5(vector_A, horas_por_curso):
             print(f"{par} no cumple las restricciones")
 
 
+def revisar_horas_exactas(horas_por_curso_total_necesitan):
+
+    print(horas_por_curso_total_necesitan)
+
+
+def revisar_restriccion_gobierno(profesores_horas, horas_aula):
+    
+    horas_aula_profesores = {profesor: 0 for profesor in profesores_horas.keys()}
+    for tupla in horas_aula:
+        horas_aula_profesores[tupla[0][0]] += 1
+     
+    for profesor, horas_contrato in profesores_horas.items():
+        print(f"Profesor {profesor}: porcentaje aula/contrato: {45*horas_aula_profesores[profesor]/(horas_contrato*60)}")
+
+
 if __name__ == "__main__":
     # generar_profesores_a_csv(4)
     # pprint(profesores)
-    for i in ramos.values():
-        print(
-            f"{i}: Necesita: {horas_por_ramo_total_necesitan[i]} Tiene: {horas_por_ramo_total_tiene[i]}")
+
+    revisar_horas_exactas(horas_por_curso_total_necesitan)
+    
+    # for i in ramos.values():
+        # print(
+            # f"{i}: Necesita: {horas_por_ramo_total_necesitan[i]} Tiene: {horas_por_ramo_total_tiene[i]}")
     # pprint(sum(i for _,i in horas_por_ramo_total_necesitan.items()))

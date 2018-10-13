@@ -43,7 +43,7 @@ RAMOS_EQUIVALENTES = {
 }
 
 
-PLAN = 'datos/plan_2.csv'
+PLAN = 'datos/plan.csv'
 # plan.csv es el que dan
 # plan_2.csv es uno propuesto mas dificil
 
