@@ -83,15 +83,21 @@ m.addConstrs((quicksum(A[(p, c, r, t), m]
 
 
 # R6
+# m.addConstrs((A[(p, c, r, d), m] == A[(p, c, r, d), m+1]
+#               for p in profesores
+#               for c in cursos
+#               for r in ramos_seguidos
+#               for d in dias
+#               for m in modulos[:-1]), "R6_1")
 
 m.addConstrs((quicksum(A[(p, c, r, d), m] for m in modulos) <= 2
               for c in cursos
               for p in profesores
               for r in ramos_seguidos
-              for d in dias), "R6")
+              for d in dias), "R6_2")
 
 
-# R7_1 
+# R7_1 original
 m.addConstrs((X[(profesor)] <=
               (45*quicksum(A[(profesor, curso, ramo, dia), modulo]
                            for curso in cursos for ramo in ramos for dia in dias for modulo in modulos) +
@@ -100,16 +106,58 @@ m.addConstrs((X[(profesor)] <=
               for profesor in profesores), "R7_1")
 
 
+# R7_1 arreglada, tiempo infinito
+# m.addConstrs((X[(p)] <=
+#             45*(
+#                 quicksum(A[(p,c,r,d), m]
+#                     for c in cursos
+#                     for r in ramos
+#                     for d in dias
+#                     for m in modulos)
+#                 +
+#                 quicksum(U[(p, d)]
+#                     for d in dias)
+#             )/
+#             36*(
+#                 quicksum(A[(p, c, r, d), m]
+#                          for c in cursos
+#                          for r in ramos
+#                          for d in dias
+#                          for m in modulos)
+#                 +
+#                 quicksum(U[(p, d)]
+#                          for d in dias)
+#                 +
+#                 quicksum(P[(p,r), d, m]
+#                 for r in ramos
+#                 for d in dias
+#                 for m in modulos)
+#             )
+
+#             for p in profesores
+#             ), "R7_1")
+
+
 # R7_2
 m.addConstrs((X[(profesor)] >= (45*quicksum(A[(profesor, curso, ramo, dia), modulo]
                                             for curso in cursos for ramo in ramos for dia in dias for modulo in modulos) +
                                 quicksum(U[(profesor, dia)] for dia in dias) - (36 * profesores_horas[(profesor)]))/(36 * profesores_horas[(profesor)]) for profesor in profesores), "R7_2")
 
-# R8
+# Se deberia arreglar un R7_2 arreglado tambien
+
+
+# Esta R8 esta mala, pero puede aceptarse que un curso tenga 2 profesores distintos de matematicas
+# m.addConstrs((
+#     quicksum(A[(p, c, r, t), m]
+#              for m in modulos for t in dias for p in profesores) == 1
+#     for c in cursos for r in ramos),
+#     "R8")
+
+# R9
 m.addConstrs((quicksum(A[(profesor, curso, ramo, dia), modulo]
                        for ramo in ramos
                        for profesor in profesores) <= 1
-              for curso in cursos for modulo in modulos for dia in dias), "R8")
+              for curso in cursos for modulo in modulos for dia in dias), "R9")
 
 
 # Experticia profesores
@@ -119,4 +167,30 @@ m.addConstrs((
     quicksum(A[(p, c, r, t), m]
              for m in modulos for t in dias for c in cursos)
     for p in profesores for r in ramos),
-    "R9")
+    "R10")
+
+
+# Nueva restriccion, podria areglar lo de las horas de planificacion, no se si
+# hay algo malo con horas/minutos pero no funciona
+# m.addConstrs((
+#             quicksum(P[(p, r), d, m]
+#                         for r in ramos
+#                         for d in dias
+#                         for m in modulos_profes)
+#             >=
+#             (quicksum(P[(p, r), d, m]
+#                 for r in ramos
+#                 for d in dias
+#                 for m in modulos_profes)
+#             +
+#             quicksum(
+#                 A[(p, c, r, t), m]
+#                 for c in cursos
+#                 for r in ramos
+#                 for t in dias
+#                 for m in modulos
+#             ))*0.40
+
+
+#             for p in profesores
+#         ), "R11")
