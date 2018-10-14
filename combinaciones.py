@@ -15,7 +15,10 @@ letra_curso = ["A", "B"]
 
 cursos = [i + j for i in nivel for j in letra_curso]
 
+
+
 modulos = [i for i in range(1, 9)]
+modulos_profes = [i for i in range(1, 12)]
 dias = [i for i in range(1, 6)]
 
 # Para excel
@@ -87,8 +90,10 @@ combinaciones_2 = []
 for profesor in profesores.values():
     for ramo in ramos.values():
         for dia in dias:
-            for mod in modulos:
+            for mod in modulos_profes:
                 combinaciones_2.append(((profesor['nombre'], ramo), dia, mod))
+
+
 
 
 combinaciones_2 = tuplelist(combinaciones_2)  # P

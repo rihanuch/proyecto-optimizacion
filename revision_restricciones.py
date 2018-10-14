@@ -87,15 +87,30 @@ def revisar_horas_exactas(horas_por_curso_total_necesitan):
     print(horas_por_curso_total_necesitan)
 
 
-def revisar_restriccion_gobierno(profesores_horas, horas_aula):
+def revisar_restriccion_gobierno(profesores_horas, horas_aula, horas_planificacion):
     
     horas_aula_profesores = {profesor: 0 for profesor in profesores_horas.keys()}
+    horas_plan_profesores = {profesor: 0 for profesor in profesores_horas.keys()}
     for tupla in horas_aula:
         horas_aula_profesores[tupla[0][0]] += 1
      
-    for profesor, horas_contrato in profesores_horas.items():
-        print(f"Profesor {profesor}: porcentaje aula/contrato: {45*horas_aula_profesores[profesor]/(horas_contrato*60)}")
+    for tupla in horas_planificacion:
+        horas_plan_profesores[tupla[0]] += 1
+     
 
+
+    for profesor, horas_contrato in profesores_horas.items():
+        horas_plan = horas_plan_profesores[profesor]
+        horas_aula = horas_aula_profesores[profesor]
+        try:
+            print(
+                f"""Profesor {profesor}:
+                Contrato: {(profesores_horas[profesor]*60)/45}
+                AULA: {horas_aula}
+                PLAN: {horas_plan}
+                %: {horas_plan/(horas_aula+horas_plan)}""")
+        except ZeroDivisionError:
+            print("No tiene horas aula ni plan ")
 
 if __name__ == "__main__":
     # generar_profesores_a_csv(4)
