@@ -6,7 +6,7 @@ import csv
 
 profesores, ramos = genera_profesores_dict()
 ramos_seguidos = ['ARTE', 'MÚSICA',
-                  'EDUCACIÓN FÍSICA', 
+                  'EDUCACIÓN FÍSICA',
                   'ORIENTACIÓN',
                   'TECNOLOGÍA',
                   'RELIGIÓN']
@@ -14,7 +14,6 @@ nivel = [str(i) for i in range(1, 9)]
 letra_curso = ["A", "B"]
 
 cursos = [i + j for i in nivel for j in letra_curso]
-
 
 
 modulos = [i for i in range(1, 9)]
@@ -68,7 +67,6 @@ for id_, profesor in profesores.items():
             diccionario_profesores_ramos[(profesor['nombre'], ramo_nombre)] = 0
 
 
-
 _, profesores_ensenan = multidict(diccionario_profesores_ramos)
 _, profesores_horas = multidict(diccionario_profesores_ensenan)
 
@@ -94,11 +92,18 @@ for profesor in profesores.values():
                 combinaciones_2.append(((profesor['nombre'], ramo), dia, mod))
 
 
-
-
 combinaciones_2 = tuplelist(combinaciones_2)  # P
 
 combinaciones_3 = tuplelist([i['nombre'] for i in profesores.values()])  # X
 
 combinaciones_4 = tuplelist((i['nombre'], j)
                             for i in profesores.values() for j in dias)  # U
+
+combinaciones_1_1 = []
+for profesor in profesores.values():
+    for curso in cursos:
+        for ramo in ramos.values():
+            combinaciones_1_1.append(
+                ((curso, ramo), profesor['nombre']))
+
+combinaciones_1_1 = tuplelist(combinaciones_1_1)

@@ -2,10 +2,19 @@ from gurobipy import *
 from combinaciones import profesores_horas, profesores_ensenan, horas_por_curso, \
     profesores, ramos, dias, modulos, modulos_profes, cursos, combinaciones_1, \
     combinaciones_2, combinaciones_3, combinaciones_4, profesor_ramo,\
-    ramos_seguidos
+    ramos_seguidos, combinaciones_1_1
 from pprint import pprint
 from revision_restricciones import revisar_R5, revisar_restriccion_gobierno
 from resultados.resultados import Escribidor
+
+
+# ponderador es el 36 original de la restriccion 7
+# originalmente es 36 por los 60 min * % de horas aulas que debe cumplir
+# si se disminuye se hace mas estricta la restriccion
+# el minimo valor del ponderador para que la funcion objetivo siga siendo 0
+# es de 34.286 (se redondeo a 3 decimales). Esto equivale a 57.143333 %
+ponderador = 34.286
+print("\nPonderador de cumplimiento:", ponderador, "\n")
 
 
 # Modelob
@@ -13,6 +22,7 @@ m = Model('Horarios profesores')
 
 # Variables
 A = m.addVars(combinaciones_1, vtype=GRB.BINARY)
+A_1 = m.addVars(combinaciones_1_1, vtype=GRB.BINARY)
 P = m.addVars(combinaciones_2, vtype=GRB.BINARY)
 X = m.addVars(combinaciones_3, vtype=GRB.BINARY)
 U = m.addVars(combinaciones_4, vtype=GRB.BINARY)
@@ -90,33 +100,44 @@ m.addConstrs((quicksum(A[(p, c, r, d), m] for m in modulos) <= 2
               for r in ramos_seguidos
               for d in dias), "R6")
 
-
-# R7_1 
+# R7_1
 m.addConstrs((X[(profesor)] <=
               (45*quicksum(A[(profesor, curso, ramo, dia), modulo]
                            for curso in cursos for ramo in ramos for dia in dias for modulo in modulos) +
                quicksum(U[(profesor, dia)] for dia in dias)) /
-              (36 * profesores_horas[(profesor)])
+              (ponderador * profesores_horas[(profesor)])
               for profesor in profesores), "R7_1")
 
 
 # R7_2
 m.addConstrs((X[(profesor)] >= (45*quicksum(A[(profesor, curso, ramo, dia), modulo]
                                             for curso in cursos for ramo in ramos for dia in dias for modulo in modulos) +
-                                quicksum(U[(profesor, dia)] for dia in dias) - (36 * profesores_horas[(profesor)]))/(36 * profesores_horas[(profesor)]) for profesor in profesores), "R7_2")
+                                quicksum(U[(profesor, dia)] for dia in dias) - (ponderador * profesores_horas[(profesor)]))/(36 * profesores_horas[(profesor)]) for profesor in profesores), "R7_2")
 
-# R8
+# R8_1
+m.addConstrs((quicksum(A_1[(curso, ramo), profesor]
+                       for profesor in profesores) <= 1
+              for curso in cursos for ramo in ramos), "R8")
+
+# R8_2
+m.addConstrs((quicksum(A[(profesor, curso, ramo, dia), modulo]
+                       for modulo in modulos for dia in dias) ==
+              horas_por_curso[curso, ramo] * A_1[(curso, ramo), profesor]
+              for profesor in profesores for ramo in ramos for curso in cursos), "R8_2")
+
+# R9
 m.addConstrs((quicksum(A[(profesor, curso, ramo, dia), modulo]
                        for ramo in ramos
                        for profesor in profesores) <= 1
-              for curso in cursos for modulo in modulos for dia in dias), "R8")
+              for curso in cursos for modulo in modulos for dia in dias), "R9")
 
 
-# Experticia profesores
+
+# Experticia profesores: R10
 # 10000000 es M muy grande
 m.addConstrs((
     profesores_ensenan[(p, r)] * 10000000 >=
     quicksum(A[(p, c, r, t), m]
              for m in modulos for t in dias for c in cursos)
     for p in profesores for r in ramos),
-    "R9")
+    "R10")
